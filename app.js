@@ -4,6 +4,7 @@ const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
 const reset = document.getElementById("jsReset");
+const saveBtn = document.getElementById('jsSave')
 
 const INITIASL_COLOR = "#2c2c2c";
 const WHITE_COLOR = "#ffffff";
@@ -79,12 +80,25 @@ function handleResetClick() {
   mode.innerText = "Fill";
 }
 
+function handleCM(event){
+  event.preventDefault()
+}
+
+function handleSaveClick(){
+  const image = canvas.toDataURL();
+  const link = document.createElement('a');
+  link.href = image;
+  link.download = 'PaintJS[🎨]';
+  link.click();
+}
+
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", startPainting);
   canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
   canvas.addEventListener("click", handleCanvasClick);
+  canvas.addEventListener('contextmenu',handleCM)
 }
 
 Array.from(colors).forEach((color) =>
@@ -101,4 +115,8 @@ if (mode) {
 
 if (reset) {
   reset.addEventListener("click", handleResetClick);
+}
+
+if (saveBtn) {
+  saveBtn.addEventListener('click',handleSaveClick)
 }
