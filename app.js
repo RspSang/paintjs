@@ -3,16 +3,20 @@ const ctx = canvas.getContext("2d");
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
+const reset = document.getElementById("jsReset");
 
 const INITIASL_COLOR = "#2c2c2c";
+const WHITE_COLOR = "#ffffff";
 const CANVAS_SIZE = 800;
 
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
 
+ctx.fillStyle = WHITE_COLOR;
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.strokeStyle = INITIASL_COLOR;
 ctx.fillStyle = INITIASL_COLOR;
-ctx.lineWidth = 2.5;
+ctx.lineWidth = 5;
 
 let painting = false;
 let filling = false;
@@ -59,9 +63,20 @@ function handleModeClick() {
 }
 
 function handleCanvasClick() {
-    if(filling){
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
+  if (filling) {
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+}
+
+function handleResetClick() {
+  ctx.fillStyle = WHITE_COLOR;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = INITIASL_COLOR;
+  range.value = 5;
+  ctx.lineWidth = range.value;
+  painting = false;
+  filling = false;
+  mode.innerText = "Fill";
 }
 
 if (canvas) {
@@ -82,4 +97,8 @@ if (range) {
 
 if (mode) {
   mode.addEventListener("click", handleModeClick);
+}
+
+if (reset) {
+  reset.addEventListener("click", handleResetClick);
 }
